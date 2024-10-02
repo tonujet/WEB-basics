@@ -43,3 +43,9 @@ target/
 *.pdb
 .cargo/
 .env
+
+
+#document
+*.docx
+*.doc
+docs
