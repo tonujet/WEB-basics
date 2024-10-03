@@ -107,6 +107,7 @@ impl Chats {
         let chat = self
             .insert_chat(req_chat_name, username.clone(), tx.clone())
             .await;
+
         match chat {
             Ok(chat) => {
                 chat.get_start_messages(page, tx.clone()).await;
