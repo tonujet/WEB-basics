@@ -18,7 +18,9 @@ where
             .and_then(|content_type| content_type.to_str().ok())
             .ok_or(ApiError::Parsing(ParseJsonError::ContentTypeRequired))?;
         if !is_json_content_type(content_type) {
-            return Err(ApiError::Parsing(ParseJsonError::InvalidContentType(content_type.into())).into());
+            return Err(
+                ApiError::Parsing(ParseJsonError::InvalidContentType(content_type.into())).into(),
+            );
         }
 
         let body: T = serde_json::from_slice(&body.take()?.into_bytes().await?)

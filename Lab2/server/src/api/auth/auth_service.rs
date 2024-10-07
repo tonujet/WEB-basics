@@ -1,5 +1,5 @@
 use crate::api::auth::Tokens;
-use crate::api::error::{ApiResult};
+use crate::api::error::ApiResult;
 use crate::api::jwt::jwt_service;
 use crate::api::user::{user_service, LoginUserDto};
 use crate::api::AppState;

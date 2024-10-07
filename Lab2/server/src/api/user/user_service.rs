@@ -27,7 +27,6 @@ pub async fn validate_credentials(
     Ok(user_dto)
 }
 
-
 pub async fn validate_roles(
     state: &AppState,
     username: &str,
@@ -48,7 +47,6 @@ pub async fn validate_roles(
         Ok(user)
     }
 }
-
 
 pub async fn update_user(state: &AppState, update_user_dto: UpdateUserDto) -> ApiResult<UserDto> {
     let user = user_repo::update_user(state, update_user_dto).await?;

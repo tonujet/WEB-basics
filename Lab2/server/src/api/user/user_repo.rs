@@ -58,7 +58,7 @@ pub async fn create_user(state: &AppState, create_user_dto: CreateUserDto) -> Re
 pub async fn get_user<P>(state: &AppState, mut predicate: P) -> RepoResult<UserDto>
 where
     P: FnMut(UserDto) -> bool,
-{   
+{
     let user = get_user_entity(state, |&u| predicate(u.clone().into())).await?;
     Ok(user.into())
 }
