@@ -8,7 +8,5 @@ pub enum AppError {
     Config { env: &'static str, message: String },
 
     #[error("Internal error: {0}")]
-    Internal (String)
+    Internal(String),
 }
-
-

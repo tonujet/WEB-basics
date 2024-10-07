@@ -1,13 +1,13 @@
+use crate::api::user::Role;
 use crate::api::Entity;
+use jsonwebtoken::errors::ErrorKind;
 use poem::error::ResponseError;
 use poem::http::StatusCode;
 use poem::{IntoResponse, Response};
 use serde::{Deserialize, Serialize};
 use std::error::Error as StdError;
-use jsonwebtoken::errors::ErrorKind;
 use strum_macros::AsRefStr;
 use thiserror::Error;
-use crate::api::user::Role;
 
 pub type ApiResult<T> = Result<T, ApiError>;
 pub type AuthResult<T> = Result<T, AuthError>;
@@ -17,13 +17,13 @@ pub type RepoResult<T> = Result<T, RepoError>;
 pub enum ApiError {
     #[error(transparent)]
     Authentication(#[from] AuthError),
-    
+
     #[error(transparent)]
     Repository(#[from] RepoError),
 
     #[error(transparent)]
     Validation(#[from] validator::ValidationErrors),
-    
+
     #[error(transparent)]
     Parsing(#[from] poem::error::ParseJsonError),
 
@@ -55,14 +55,12 @@ impl ResponseError for ApiError {
         };
         let body = serde_json::to_string(&body)
             .unwrap_or("Something went wrong with exception handling".to_string());
-        
-        body
-            .with_content_type("application/json")
+
+        body.with_content_type("application/json")
             .with_status(self.status())
             .into_response()
     }
 }
-
 
 #[derive(Error, Debug)]
 pub enum AuthError {
@@ -84,19 +82,18 @@ pub enum AuthError {
     JWThandling(#[from] jsonwebtoken::errors::Error),
 }
 
-impl ResponseError for AuthError{
+impl ResponseError for AuthError {
     fn status(&self) -> StatusCode {
         match self {
             AuthError::PasswordWrong(_) => StatusCode::UNAUTHORIZED,
             AuthError::InappropriateRole { .. } => StatusCode::FORBIDDEN,
             AuthError::MissingToken => StatusCode::UNAUTHORIZED,
-            AuthError::JWThandling(err) => {
-                match err.kind() {
-                    ErrorKind::InvalidToken | ErrorKind::InvalidSignature | ErrorKind::ExpiredSignature => StatusCode::UNAUTHORIZED,
-                    _ => StatusCode::INTERNAL_SERVER_ERROR
-                }
-            }
-            
+            AuthError::JWThandling(err) => match err.kind() {
+                ErrorKind::InvalidToken
+                | ErrorKind::InvalidSignature
+                | ErrorKind::ExpiredSignature => StatusCode::UNAUTHORIZED,
+                _ => StatusCode::INTERNAL_SERVER_ERROR,
+            },
         }
     }
 }
@@ -111,12 +108,12 @@ pub enum RepoError {
 
     #[error("Entity {} is missing smth in field: {1} ", .0.as_ref())]
     Missing(Entity, String),
-    
+
     #[error("Something went wrong")]
     Internal,
 }
 
-impl ResponseError for RepoError{
+impl ResponseError for RepoError {
     fn status(&self) -> StatusCode {
         match self {
             RepoError::NotFound(_) => StatusCode::NOT_FOUND,
@@ -126,7 +123,6 @@ impl ResponseError for RepoError{
         }
     }
 }
-
 
 #[derive(Debug, Serialize, Deserialize)]
 struct ResponseBody<'a> {

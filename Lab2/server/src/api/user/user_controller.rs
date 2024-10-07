@@ -1,10 +1,10 @@
 use crate::api::auth::auth_middleware::AuthMiddleware;
+use crate::api::error::ApiError;
 use crate::api::user::{user_service, CreateUserDto, UpdateUserDto, UserDto};
+use crate::api::utils::validation_extractor::JsonValidation;
 use crate::api::AppState;
 use poem::web::{Data, Json};
 use poem::{get, handler, EndpointExt, Request, Route};
-use crate::api::error::ApiError;
-use crate::api::utils::validation_extractor::JsonValidation;
 
 pub fn routes(state: AppState) -> Route {
     Route::new()
@@ -14,7 +14,12 @@ pub fn routes(state: AppState) -> Route {
                 .post(add_user)
                 .with(AuthMiddleware::admin(state.clone())),
         )
-        .at("/me", get(get_myself).put(update_myself).with(AuthMiddleware::all(state)))
+        .at(
+            "/me",
+            get(get_myself)
+                .put(update_myself)
+                .with(AuthMiddleware::all(state)),
+        )
 }
 
 #[handler]
@@ -33,7 +38,7 @@ async fn add_user(
 }
 
 #[handler]
-async fn get_myself(req: &Request) ->  poem::Result<Json<UserDto>> {
+async fn get_myself(req: &Request) -> poem::Result<Json<UserDto>> {
     let user: &UserDto = req.extensions().get().ok_or(ApiError::Internal)?;
     Ok(Json(user.to_owned()))
 }
