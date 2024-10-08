@@ -1,0 +1,6 @@
+[env]
+SERVER_PORT = ""
+SERVER_HOST = ""
+
+JWT_SECRET = ""
+JWT_ACCESS_DURATION = ""
