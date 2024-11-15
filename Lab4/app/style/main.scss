@@ -1,0 +1,181 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+}
+
+
+body {
+  text-align: left;
+  background: #000;
+  color: #fff;
+
+}
+
+.header {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.header_link {
+  text-align: center;
+  font-size: 30px;
+  flex: 1 1 auto;
+  background: #383535;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px #1e1c1c;
+  border: .5px solid var(--gray-100);
+  transition: .2s ease-in-out;
+}
+
+.header_link:hover {
+  background: #1e1c1c;
+}
+
+
+.header_link a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 20px;
+}
+
+.body {
+  padding: 10px;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.list_block {
+  background: #383535;
+  flex: 1 1 auto;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.5s;
+  box-shadow: 0 3px 3px #1e1c1c;
+  font-size: 18px;
+  position: relative;
+  min-height: 150px;
+  min-width: 400px;
+  display: block;
+}
+.list_block:hover {
+  background: #1e1c1c;
+}
+
+.block_button input {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+
+.block_buttons {
+  //display: flex;
+}
+
+.update_button input {
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  right: 70px;
+  background: #c4e7ae;
+}
+
+.update_button input:hover {
+  background: #abf17f;
+}
+
+.delete_button input {
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f5b7c2;
+  transition: 0.5s
+}
+
+.delete_button input:hover {
+  background: #e07373;
+}
+
+
+
+.block_loading {
+  color: #c00000;
+}
+
+.list_empty {
+  font-size: 30px;
+}
+
+.form {
+  margin: 100px auto;
+  width: 600px;
+}
+
+.form_raw {
+  margin-bottom: 10px;
+}
+
+.form_raw input, select {
+  //all: unset;
+  padding: 10px 15px;
+  width: 100%;
+  background: #383535;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+
+.form_raw select {
+  cursor: pointer;
+}
+
+.form_raw input[type="date"] {
+  cursor: pointer;
+}
+
+.form_raw input[type="submit"] {
+  margin-top: 20px;
+  padding: 20px;
+  transition: 0.2s;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.form_raw input[type="submit"]:hover {
+  padding: 20px;
+  background: #282626;
+}
+
+.form_raw input[type="submit"]:active {
+  padding: 20px;
+  color: #a60000;
+}
+
+.form_raw option {
+  padding: 30px;
+}
+
+.form_raw label{
+  font-size: 22px;
+  display: block;
+}
+
+.form_raw .error{
+  display: block;
+  color: #a60000;
+}
